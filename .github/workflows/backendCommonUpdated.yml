@@ -3,6 +3,7 @@ name: copy backend-common from spelieve-common
 on:
   repository_dispatch:
     types: [backend-common-updated]
+  workflow_dispatch:
 
 jobs:
   backendCommonUpdated:
@@ -17,10 +18,8 @@ jobs:
           repository: Ayato-kosaka/spelieve-common
           path: spelieve-common
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: ls
-        run: ls
       - name: copy Backend
-        run: cp spelieve-common/Backend .
+        run: cp -r spelieve-common/Backend .
       - name: clean spelieve-common
         run: rm -rf spelieve-common
       - name: create PR
