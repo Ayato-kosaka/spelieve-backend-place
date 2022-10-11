@@ -2,12 +2,12 @@ name: Copy backend-common from spelieve-common
 
 on:
   repository_dispatch:
-    types: [backend-common-updated]
+    types: [backend-common-update]
   workflow_dispatch:
 
 jobs:
-  backendCommonUpdated:
-    name: backend-common-updated
+  backendCommonUpdate:
+    name: backend-common-update
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -31,4 +31,4 @@ jobs:
           branch: copy_spelieve-common-Backend
           branch-suffix: timestamp
           delete-branch: true
-          title: 'updated backend-common'
+          title: 'update backend-common'
