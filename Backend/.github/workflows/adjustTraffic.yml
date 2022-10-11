@@ -1,0 +1,43 @@
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'SHA of target revision tag'
+        required: true
+      percentage:
+        description: 'percentage of traffic to revision'
+        required: true
+        default: '100'
+
+name: Adjust the traffic assignments for a Cloud Run service
+
+env:
+  REGION: asia-northeast1
+
+jobs:
+  update-traffic:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: set env
+        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: github-action@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - name: Display traffic update command
+        run: gcloud run services update-traffic $SERVICE_NAME --region=$REGION --to-revisions=$SERVICE_NAME-${{ github.event.inputs.sha }}=${{ github.event.inputs.percentage }}
