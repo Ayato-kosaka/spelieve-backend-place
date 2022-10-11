@@ -46,9 +46,9 @@ export class PBL002UpsertPlaceDataService {
     };
     if (
       documentSnapshot.exists &&
-      new Date().getTime() -
-        documentSnapshot.data().updatedAt.toDate().getTime() <
-        30 * 3600
+      Timestamp.now().seconds -
+        documentSnapshot.data().updatedAt.seconds <
+        30 * 24 * 60 * 60
     ) {
       return 'Nothig to upsert.';
     }
