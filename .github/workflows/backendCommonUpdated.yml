@@ -1,0 +1,33 @@
+name: copy backend-common from spelieve-common
+
+on:
+  repository_dispatch:
+    types: [backend-common-updated]
+
+jobs:
+  backendCommonUpdated:
+    name: backend-common-updated
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: clone spelieve-common
+        uses: actions/checkout@v2
+        with:
+          repository: Ayato-kosaka/spelieve-common
+          path: spelieve-common
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: copy Backend
+        run: cp spelieve-common/Backend .
+      - name: clean spelieve-common
+        run: rm -rf spelieve-common
+      - name: create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: 'copy spelieve-common/Backend'
+          branch: copy_spelieve-common-Backend
+          branch-suffix: timestamp
+          delete-branch: true
+          title: 'updated backend-common'
