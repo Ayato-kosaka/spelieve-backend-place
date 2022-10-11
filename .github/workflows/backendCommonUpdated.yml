@@ -17,6 +17,8 @@ jobs:
           repository: Ayato-kosaka/spelieve-common
           path: spelieve-common
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: ls
+        run: ls
       - name: copy Backend
         run: cp spelieve-common/Backend .
       - name: clean spelieve-common
