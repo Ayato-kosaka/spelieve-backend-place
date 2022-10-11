@@ -6,18 +6,20 @@ import * as admin from 'firebase-admin';
 import Places from 'google-places-web';
 import { GeoPoint, Timestamp } from '@firebase/firestore-types';
 
-
 @Injectable()
 export class PBL002UpsertPlaceDataService {
-  async doExecute(body: PBL002UpsertPlaceDataBodyInterface){
-    const documentReference = admin.firestore().collection(PDB01.name).doc(body.place_id);
+  async doExecute(body: PBL002UpsertPlaceDataBodyInterface) {
+    const documentReference = admin
+      .firestore()
+      .collection(PDB01.name)
+      .doc(body.place_id);
     const documentSnapshot = await documentReference.get();
     const fetchGooglePlaceDetail = async (): Promise<PDB01MPlaceInterface> => {
       const googlePlaceDetailsResponse = await Places.details({
         placeid: body.place_id,
-        language: body.language
-      })
-      const googlePlaceDetailsResult = googlePlaceDetailsResponse.result
+        language: body.language,
+      });
+      const googlePlaceDetailsResult = googlePlaceDetailsResponse.result;
       return {
         place_id: body.place_id,
         language: body.language,
@@ -25,7 +27,10 @@ export class PBL002UpsertPlaceDataService {
         imageUrl: googlePlaceDetailsResult.icon,
         // TODO あとで設定する
         instagramAPIID: '',
-        geometry: new GeoPoint(googlePlaceDetailsResult.geometry.location.lat, googlePlaceDetailsResult.geometry.location.lng),
+        geometry: new GeoPoint(
+          googlePlaceDetailsResult.geometry.location.lat,
+          googlePlaceDetailsResult.geometry.location.lng,
+        ),
         // TODO あとで設定する
         geohash: '',
         mapUrl: googlePlaceDetailsResult.url,
@@ -37,12 +42,17 @@ export class PBL002UpsertPlaceDataService {
         popularTags: [],
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
-      }
-    }
-    if (documentSnapshot.exists && (new Date().getTime() - documentSnapshot.data().updatedAt.toDate().getTime()) < 30*3600) {
-      return "Nothig to upsert."
+      };
+    };
+    if (
+      documentSnapshot.exists &&
+      new Date().getTime() -
+        documentSnapshot.data().updatedAt.toDate().getTime() <
+        30 * 3600
+    ) {
+      return 'Nothig to upsert.';
     }
     await documentReference.set(fetchGooglePlaceDetail());
-    return "Success"
+    return 'Success';
   }
 }

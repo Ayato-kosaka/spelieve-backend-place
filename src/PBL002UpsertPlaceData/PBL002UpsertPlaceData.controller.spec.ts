@@ -11,7 +11,9 @@ describe('PBL002UpsertPlaceDataController', () => {
       providers: [PBL002UpsertPlaceDataService],
     }).compile();
 
-    controller = module.get<PBL002UpsertPlaceDataController>(PBL002UpsertPlaceDataController);
+    controller = module.get<PBL002UpsertPlaceDataController>(
+      PBL002UpsertPlaceDataController,
+    );
   });
 
   it('should be defined', () => {

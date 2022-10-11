@@ -9,7 +9,9 @@ describe('PBL002UpsertPlaceDataService', () => {
       providers: [PBL002UpsertPlaceDataService],
     }).compile();
 
-    service = module.get<PBL002UpsertPlaceDataService>(PBL002UpsertPlaceDataService);
+    service = module.get<PBL002UpsertPlaceDataService>(
+      PBL002UpsertPlaceDataService,
+    );
   });
 
   it('should be defined', () => {

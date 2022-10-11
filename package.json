@@ -78,5 +78,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "eslintIgnore": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
