@@ -1,4 +1,4 @@
-name: copy backend-common from spelieve-common
+name: Copy backend-common from spelieve-common
 
 on:
   repository_dispatch:
@@ -19,7 +19,7 @@ jobs:
           path: spelieve-common
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: copy Backend
-        run: cp -r spelieve-common/Backend .
+        run: cp -pR spelieve-common/Backend .
       - name: clean spelieve-common
         run: rm -rf spelieve-common
       - name: create PR
