@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PBL002UpsertPlaceDataBodyInterface } from 'spelieve-common/Interface/Place/PBL002/UpsertPlaceDataBodyInterface';
-import { PDB01MPlaceInterface } from 'spelieve-common/Interface/Place/PDB01/MPlaceInterface';
+import { PBL002UpsertPlaceDataBodyInterface } from 'spelieve-common/Interface';
+import { PDB01, PDB01MPlaceInterface } from 'spelieve-common/Interface/Place/PDB01';
 import * as admin from 'firebase-admin';
 import Places from 'google-places-web';
-import { GeoPoint, Timestamp } from '@firebase/firestore-types';
-import { PDB01 } from 'spelieve-common/Interface';
+import { GeoPoint, Timestamp } from 'firebase-admin/firestore';
 
 @Injectable()
 export class PBL002UpsertPlaceDataService {

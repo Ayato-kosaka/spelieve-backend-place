@@ -6,7 +6,7 @@ import { PBL002UpsertPlaceDataModule } from './PBL002UpsertPlaceData/PBL002Upser
 
 @Module({
   imports: [PBL002UpsertPlaceDataModule],
-  controllers: [AppController, PBL002UpsertPlaceDataController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
