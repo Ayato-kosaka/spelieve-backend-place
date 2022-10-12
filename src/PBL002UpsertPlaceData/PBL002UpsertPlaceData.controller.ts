@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { PBL002UpsertPlaceDataService } from './PBL002UpsertPlaceData.service';
-import { PBL002UpsertPlaceDataBodyInterface } from 'spelieve-common/Interface';
+import { PBL002UpsertPlaceDataBodyInterface } from 'spelieve-common/lib/Interface';
 
-@Controller('PBL002UpsertPlaceData')
+@Controller('PBL002')
 export class PBL002UpsertPlaceDataController {
   constructor(private readonly service: PBL002UpsertPlaceDataService) {}
 
