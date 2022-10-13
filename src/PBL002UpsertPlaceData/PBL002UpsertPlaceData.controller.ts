@@ -6,6 +6,7 @@ import { PBL002UpsertPlaceDataBodyInterface } from 'spelieve-common/lib/Interfac
 export class PBL002UpsertPlaceDataController {
   constructor(private readonly service: PBL002UpsertPlaceDataService) {}
 
+  // curl -XPOST -H "Content-Type:application/json" localhost:3000/PBL002 -d '{"place_id":"ChIJN1t_tDeuEmsRUsoyG83frY4", "language":"ja"}'
   @Post()
   PBL002(@Body() PBL002Body: PBL002UpsertPlaceDataBodyInterface) {
     return this.service.doExecute(PBL002Body);
