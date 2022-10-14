@@ -10,6 +10,7 @@ async function bootstrap() {
   const configService: ConfigService = app.get(ConfigService);
 
   Places.apiKey = configService.get<string>('GOOGLE_CLOUD_API_KEY');
+  Places.debug = configService.get('NODE_ENV') === 'development';
 
   const adminConfig: ServiceAccount = {
     projectId: configService.get<string>('FIREBASE_PROJECT_ID'),
