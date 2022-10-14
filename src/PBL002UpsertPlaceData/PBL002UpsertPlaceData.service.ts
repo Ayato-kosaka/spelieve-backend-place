@@ -79,11 +79,6 @@ export class PBL002UpsertPlaceDataService {
       const documentReference = await placeCollectionRef.add(googlePlaceDetail);
       placeImagesCollectionRef = firestore().collection(`${documentReference.path}/${PDB02.name}`)
     }
-
-    await placeImagesCollectionRef.listDocuments().then(docList => docList.forEach(doc => doc.delete()))
-      const photoAPIRes = await lastValueFrom(this.httpService.get(`${GOOGLE_MAPS_API_TARGET}/photo?maxwidth=${400}&photoreference=${googlePlaceDetailsResult.photos[0].photo_reference}&key=${Places.apiKey}`))
-      console.log(photoAPIRes.)
-      console.log(Object.keys(photoAPIRes.data))
     
 
     // await googlePlaceDetailsResult.photos.slice(0, 9).forEach(async photo => {
