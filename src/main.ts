@@ -1,9 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import * as admin from 'firebase-admin';
-import Places from 'google-places-web';
 import { ServiceAccount } from 'firebase-admin';
+import Places from 'google-places-web';
+
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
