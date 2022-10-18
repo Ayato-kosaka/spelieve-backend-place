@@ -32,4 +32,11 @@ jobs:
     - name: Test
       run: npm run test:cov
 
+    # プッシュする
+    - name: push changes
+      run: |
+        git add -A
+        git commit -m "Github Action CI.yml"
+        git push origin main
+
      
