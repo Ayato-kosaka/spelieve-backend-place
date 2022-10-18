@@ -1,7 +1,9 @@
-import { QueryDocumentSnapshot, Timestamp } from 'firebase-admin/firestore';
+
 
 import { HowManyDaysToLimitPlaceUpserts } from 'spelieve-common/lib/Consts/Place';
 import { MPlace } from 'spelieve-common/lib/Models/Place/PDB01/MPlace';
+
+import { QueryDocumentSnapshot, Timestamp } from 'firebase-admin/firestore';
 
 export class PBL002UpsertPlaceDataServiceRule {
   constructor(private placeDocumentSnap: QueryDocumentSnapshot | null) {}
