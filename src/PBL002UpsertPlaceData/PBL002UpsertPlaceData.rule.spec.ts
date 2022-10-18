@@ -8,6 +8,7 @@ describe('PBL002UpsertPlaceDataServiceRule', () => {
   beforeEach(async () => {});
 
   // it('placeDocumentSnap IS NULL', () => {
+  //
   //   const rule = new PBL002UpsertPlaceDataServiceRule(null);
   //   expect(rule.noNeedToUpsert()).toBe(false);
   //   expect(rule.needToInsert()).toBe(true);
