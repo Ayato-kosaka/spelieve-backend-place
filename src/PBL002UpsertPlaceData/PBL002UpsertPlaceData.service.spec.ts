@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PBL002UpsertPlaceDataService } from './PBL002UpsertPlaceData.service';
 
@@ -6,6 +7,7 @@ describe('PBL002UpsertPlaceDataService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       providers: [PBL002UpsertPlaceDataService],
     }).compile();
 
