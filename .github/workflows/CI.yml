@@ -1,0 +1,35 @@
+name: CI
+
+env:
+  CI: true
+
+on:
+ push:
+
+jobs:
+ CI:
+   runs-on: ubuntu-latest
+   steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    
+    # Nodeのバージョンを指定
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+        registry-url: https://registry.npmjs.org
+
+    # 必要なモジュールをインストール
+    - name: install node_modules
+      run: npm ci
+
+    # コードフォーマット
+    - name: Code Format
+      run: npm run format && npm run lint
+
+    # テスト実行
+    - name: Test
+      run: npm run test:cov
+
+     
