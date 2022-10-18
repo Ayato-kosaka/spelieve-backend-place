@@ -35,5 +35,5 @@ jobs:
       uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-script: npm run test:coverage
+        test-script: npm run test:cov
         threshold: 100 # 'Coverage threshold. If total coverage is less than threshold 100%, PR will be rejected'
