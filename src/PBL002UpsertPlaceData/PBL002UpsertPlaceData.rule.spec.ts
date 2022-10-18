@@ -7,13 +7,13 @@ import { PBL002UpsertPlaceDataServiceRule } from './PBL002UpsertPlaceData.rule';
 describe('PBL002UpsertPlaceDataServiceRule', () => {
   beforeEach(async () => {});
 
-  it('placeDocumentSnap IS NULL', () => {
-    const rule = new PBL002UpsertPlaceDataServiceRule(null);
-    expect(rule.noNeedToUpsert()).toBe(false);
-    expect(rule.needToInsert()).toBe(true);
-    expect(rule.needToUpdate()).toBe(false);
-    expect((rule as any).isNeedToUpsert()).toBe(true);
-  });
+  // it('placeDocumentSnap IS NULL', () => {
+  //   const rule = new PBL002UpsertPlaceDataServiceRule(null);
+  //   expect(rule.noNeedToUpsert()).toBe(false);
+  //   expect(rule.needToInsert()).toBe(true);
+  //   expect(rule.needToUpdate()).toBe(false);
+  //   expect((rule as any).isNeedToUpsert()).toBe(true);
+  // });
 
   it('placeDocumentSnap updated before limited day', () => {
     class placeDocumentSnap {
