@@ -24,20 +24,11 @@ jobs:
     - name: install node_modules
       run: npm ci
 
-    # コードフォーマット
+    # コードフォーマットチェック
     - name: Code Format
-      run: npm run format && npm run lint
+      run: npm run format:check
 
     # テスト実行
     - name: Test
       run: npm run test:cov
-
-    # プッシュする
-    - name: push changes
-      run: |
-        git config user.name github-actions[bot]
-        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-        git add -A
-        git commit -m "Github Action CI.yml"
-        git push
      
