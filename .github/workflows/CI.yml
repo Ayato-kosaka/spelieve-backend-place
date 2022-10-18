@@ -24,11 +24,16 @@ jobs:
     - name: install node_modules
       run: npm ci
 
-    # コードフォーマットチェック
+    # Prettier のフォーマット漏れがないかチェックする
+    # ESlint のフォーマット漏れがないかチェックする
     - name: Code Format
       run: npm run format:check
 
-    # テスト実行
+    # TypeScripe エラーがないかチェックする
+    # Coverage が100%であるかチェックする
     - name: Test
-      run: npm run test:cov
-     
+      uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        test-script: npm run test:coverage
+        threshold: 100 # 'Coverage threshold. If total coverage is less than threshold 100%, PR will be rejected'
