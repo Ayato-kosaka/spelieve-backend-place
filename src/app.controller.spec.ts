@@ -16,7 +16,9 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World! I am spelieve-backend-place!');
+      expect(appController.getHello()).toBe(
+        'Hello World! I am spelieve-backend-place!',
+      );
     });
   });
 });

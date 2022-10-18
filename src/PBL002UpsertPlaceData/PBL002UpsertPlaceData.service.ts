@@ -12,11 +12,12 @@ import { Injectable } from '@nestjs/common';
 
 import {
   GooglePlacePhotosMaxWidth,
-  HowManyDaysToLimitPlaceUpserts,
   NumberOfImagesPlaceStores,
 } from 'spelieve-common/lib/Consts/Place';
 import { UpsertPlaceDataBodyInterface } from 'spelieve-common/lib/Interfaces';
 import { MPlace } from 'spelieve-common/lib/Models/Place/PDB01/MPlace';
+
+import { PBL002UpsertPlaceDataServiceRule } from './PBL002UpsertPlaceData.rule';
 
 @Injectable()
 export class PBL002UpsertPlaceDataService {
@@ -32,13 +33,10 @@ export class PBL002UpsertPlaceDataService {
         .get()
         .then((qss) => (qss.empty ? null : qss.docs[0]));
 
+    const rule = new PBL002UpsertPlaceDataServiceRule(placeDocumentSnap);
+
     // 一定時間の過ぎていないデータは更新しない
-    if (
-      !!placeDocumentSnap &&
-      Timestamp.now().seconds -
-        placeDocumentSnap.get(MPlace.Cols.updatedAt).seconds <
-        HowManyDaysToLimitPlaceUpserts * 24 * 60 * 60
-    ) {
+    if (rule.noNeedToUpsert()) {
       return "Don't need to upsert.";
     }
 
@@ -63,8 +61,8 @@ export class PBL002UpsertPlaceDataService {
         }),
     );
 
-    // Google Place Details API のレスポンスをセットする
-    const googlePlaceDetail: MPlace = {
+    // Google Place Details API のレスポンスを mPlace にセットする
+    const mPlace: MPlace = {
       place_id: body.place_id,
       language: body.language,
       name: googlePlaceDetailsResult.name,
@@ -78,7 +76,7 @@ export class PBL002UpsertPlaceDataService {
       formatted_address: googlePlaceDetailsResult.formatted_address,
       country: googlePlaceDetailsResult.address_components.find(
         (address_component) => address_component.types.includes('country'),
-      ).long_name,
+      )?.long_name as string,
       administrativeAreaLevel1:
         googlePlaceDetailsResult.address_components.find((address_component) =>
           address_component.types.includes('administrativeAreaLevel1'),
@@ -121,13 +119,13 @@ export class PBL002UpsertPlaceDataService {
     };
 
     // PDB01MPlace に登録を行う
-    if (!placeDocumentSnap) {
-      await placeCollectionRef.add(googlePlaceDetail);
+    if (rule.needToInsert()) {
+      await placeCollectionRef.add(mPlace);
     }
 
     // PDB01MPlace に更新を行う
-    if (!!placeDocumentSnap) {
-      await placeDocumentSnap.ref.set(googlePlaceDetail);
+    if (rule.needToUpdate()) {
+      await (placeDocumentSnap as QueryDocumentSnapshot).ref.set(mPlace);
     }
 
     return 'Success';
