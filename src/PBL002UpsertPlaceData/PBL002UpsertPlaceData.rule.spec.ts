@@ -5,9 +5,7 @@ import { HowManyDaysToLimitPlaceUpserts } from 'spelieve-common/lib/Consts/Place
 import { PBL002UpsertPlaceDataServiceRule } from './PBL002UpsertPlaceData.rule';
 
 describe('PBL002UpsertPlaceDataServiceRule', () => {
-
-  beforeEach(async () => {
-  });
+  beforeEach(async () => {});
 
   it('placeDocumentSnap IS NULL', () => {
     const rule = new PBL002UpsertPlaceDataServiceRule(null);
@@ -18,33 +16,49 @@ describe('PBL002UpsertPlaceDataServiceRule', () => {
   });
 
   it('placeDocumentSnap updated before limited day', () => {
-      class placeDocumentSnap {
-        public get() {
-          return Timestamp.fromMillis(-1000)
-        }
+    class placeDocumentSnap {
+      public get() {
+        return Timestamp.fromMillis(-1000);
       }
-      const data = new placeDocumentSnap()
-      const rule = new PBL002UpsertPlaceDataServiceRule(data as unknown as QueryDocumentSnapshot);
-      const spy = jest.spyOn(Timestamp, 'now').mockReturnValue(Timestamp.fromMillis(HowManyDaysToLimitPlaceUpserts * 24 * 60 * 60 * 1000));
-      expect(rule.noNeedToUpsert()).toBe(false);
-      expect(rule.needToInsert()).toBe(false);
-      expect(rule.needToUpdate()).toBe(true);
-      expect((rule as any).isNeedToUpsert()).toBe(true);
-      spy.mockRestore()
+    }
+    const data = new placeDocumentSnap();
+    const rule = new PBL002UpsertPlaceDataServiceRule(
+      data as unknown as QueryDocumentSnapshot,
+    );
+    const spy = jest
+      .spyOn(Timestamp, 'now')
+      .mockReturnValue(
+        Timestamp.fromMillis(
+          HowManyDaysToLimitPlaceUpserts * 24 * 60 * 60 * 1000,
+        ),
+      );
+    expect(rule.noNeedToUpsert()).toBe(false);
+    expect(rule.needToInsert()).toBe(false);
+    expect(rule.needToUpdate()).toBe(true);
+    expect((rule as any).isNeedToUpsert()).toBe(true);
+    spy.mockRestore();
   });
 
   it('placeDocumentSnap updated after limited day', () => {
-      class placeDocumentSnap {
-        public get() {
-          return Timestamp.fromMillis(1000)
-        }
+    class placeDocumentSnap {
+      public get() {
+        return Timestamp.fromMillis(1000);
       }
-      const data = new placeDocumentSnap()
-      const rule = new PBL002UpsertPlaceDataServiceRule(data as unknown as QueryDocumentSnapshot);
-      const spy = jest.spyOn(Timestamp, 'now').mockReturnValue(Timestamp.fromMillis(HowManyDaysToLimitPlaceUpserts * 24 * 60 * 60 * 1000));
-      expect(rule.noNeedToUpsert()).toBe(true);
-      expect((rule as any).isNeedToUpsert()).toBe(false);
-      spy.mockRestore()
+    }
+    const data = new placeDocumentSnap();
+    const rule = new PBL002UpsertPlaceDataServiceRule(
+      data as unknown as QueryDocumentSnapshot,
+    );
+    const spy = jest
+      .spyOn(Timestamp, 'now')
+      .mockReturnValue(
+        Timestamp.fromMillis(
+          HowManyDaysToLimitPlaceUpserts * 24 * 60 * 60 * 1000,
+        ),
+      );
+    expect(rule.noNeedToUpsert()).toBe(true);
+    expect((rule as any).isNeedToUpsert()).toBe(false);
+    spy.mockRestore();
   });
 
   /*************************

@@ -11,18 +11,18 @@ export class PBL002UpsertPlaceDataServiceRule {
   }
 
   public needToInsert(): boolean {
-    if(this.placeDocumentSnap){
-      return false 
+    if (this.placeDocumentSnap) {
+      return false;
     } else {
-      return true
+      return true;
     }
   }
 
   public needToUpdate(): boolean {
-    if(this.placeDocumentSnap){
-      return true 
+    if (this.placeDocumentSnap) {
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
