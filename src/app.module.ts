@@ -6,13 +6,13 @@ import { AppService } from './app.service';
 import { PBL002UpsertPlaceDataModule } from './PBL002UpsertPlaceData/PBL002UpsertPlaceData.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.env',
-    }),
-    PBL002UpsertPlaceDataModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+	imports: [
+		ConfigModule.forRoot({
+			envFilePath: '.env',
+		}),
+		PBL002UpsertPlaceDataModule,
+	],
+	controllers: [AppController],
+	providers: [AppService],
 })
 export class AppModule {}

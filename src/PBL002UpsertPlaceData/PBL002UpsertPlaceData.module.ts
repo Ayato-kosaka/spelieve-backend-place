@@ -5,8 +5,8 @@ import { PBL002UpsertPlaceDataController } from './PBL002UpsertPlaceData.control
 import { PBL002UpsertPlaceDataService } from './PBL002UpsertPlaceData.service';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [PBL002UpsertPlaceDataController],
-  providers: [PBL002UpsertPlaceDataService],
+	imports: [HttpModule],
+	controllers: [PBL002UpsertPlaceDataController],
+	providers: [PBL002UpsertPlaceDataService],
 })
 export class PBL002UpsertPlaceDataModule {}
