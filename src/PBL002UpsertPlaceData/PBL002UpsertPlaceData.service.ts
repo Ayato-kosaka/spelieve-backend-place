@@ -97,8 +97,8 @@ export class PBL002UpsertPlaceDataService {
 			rating: googlePlaceDetailsResult.rating,
 			popularTags: [],
 			photoUrls: photoUrls,
-			createdAt: placeDocumentSnap ? placeDocumentSnap.get(MPlace.Cols.createdAt) : Timestamp.now(),
-			updatedAt: Timestamp.now(),
+			createdAt: placeDocumentSnap ? placeDocumentSnap.get(MPlace.Cols.createdAt) : Timestamp.now().toDate(),
+			updatedAt: Timestamp.now().toDate(),
 		};
 
 		// PDB01MPlace に登録を行う
