@@ -1,5 +1,6 @@
+import { GeoPoint, Timestamp } from '@firebase/firestore';
 import { firestore } from 'firebase-admin';
-import { GeoPoint, QueryDocumentSnapshot, Timestamp } from 'firebase-admin/firestore';
+import { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 import Places, { GOOGLE_MAPS_API_TARGET } from 'google-places-web';
 import { lastValueFrom } from 'rxjs';
 
@@ -107,7 +108,7 @@ export class PBL002UpsertPlaceDataService {
 
 		// PDB01MPlace に更新を行う
 		if (rule.needToUpdate()) {
-			await (placeDocumentSnap as QueryDocumentSnapshot).ref.set(mPlace);
+			await placeDocumentSnap!.ref.set(mPlace);
 		}
 
 		return 'Success';
