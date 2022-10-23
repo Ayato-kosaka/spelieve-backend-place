@@ -1,4 +1,3 @@
-import { Timestamp } from '@firebase/firestore';
 import { firestore } from 'firebase-admin';
 import { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 import Places, { GOOGLE_MAPS_API_TARGET } from 'google-places-web';
@@ -97,8 +96,8 @@ export class PBL002UpsertPlaceDataService {
 			rating: googlePlaceDetailsResult.rating,
 			popularTags: [],
 			photoUrls: photoUrls,
-			createdAt: placeDocumentSnap ? placeDocumentSnap.get(MPlace.Cols.createdAt) : Timestamp.now().toDate(),
-			updatedAt: Timestamp.now().toDate(),
+			createdAt: placeDocumentSnap ? placeDocumentSnap.get(MPlace.Cols.createdAt) : new Date(),
+			updatedAt: new Date(),
 		};
 
 		// PDB01MPlace に登録を行う
