@@ -76,19 +76,18 @@ export class PBL002UpsertPlaceDataService {
 			locality: googlePlaceDetailsResult.address_components.find((address_component) =>
 				address_component.types.includes('locality'),
 			)?.long_name,
-			// REVIEW: sublocalityは一つだけ（sublocality_levelはないと思う）
-			sublocality: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('sublocality'),
+			sublocalityLevel1: googlePlaceDetailsResult.address_components.find((address_component) =>
+				address_component.types.includes('sublocality_level1'),
 			)?.long_name,
-			//sublocalityLevel2: googlePlaceDetailsResult.address_components.find((address_component) =>
-			//	address_component.types.includes('sublocalityLevel2'),
-			//)?.long_name,
-			//sublocalityLevel3: googlePlaceDetailsResult.address_components.find((address_component) =>
-			//	address_component.types.includes('sublocalityLevel3'),
-			//)?.long_name,
-			//sublocalityLevel4: googlePlaceDetailsResult.address_components.find((address_component) =>
-			//	address_component.types.includes('sublocalityLevel4'),
-			//)?.long_name,
+			sublocalityLevel2: googlePlaceDetailsResult.address_components.find((address_component) =>
+				address_component.types.includes('sublocality_level2'),
+			)?.long_name,
+			sublocalityLevel3: googlePlaceDetailsResult.address_components.find((address_component) =>
+				address_component.types.includes('sublocality_level3'),
+			)?.long_name,
+			sublocalityLevel4: googlePlaceDetailsResult.address_components.find((address_component) =>
+				address_component.types.includes('sublocality_level4'),
+			)?.long_name,
 			premise: googlePlaceDetailsResult.address_components.find((address_component) =>
 				address_component.types.includes('premise'),
 			)?.long_name,
