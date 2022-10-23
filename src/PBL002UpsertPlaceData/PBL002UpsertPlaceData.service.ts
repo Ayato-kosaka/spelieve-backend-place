@@ -1,4 +1,4 @@
-import { GeoPoint, Timestamp } from '@firebase/firestore';
+import { Timestamp } from '@firebase/firestore';
 import { firestore } from 'firebase-admin';
 import { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 import Places, { GOOGLE_MAPS_API_TARGET } from 'google-places-web';
@@ -58,10 +58,10 @@ export class PBL002UpsertPlaceDataService {
 			language: body.language,
 			name: googlePlaceDetailsResult.name,
 			imageUrl: googlePlaceDetailsResult.icon,
-			geometry: new GeoPoint(
-				googlePlaceDetailsResult.geometry.location.lat,
-				googlePlaceDetailsResult.geometry.location.lng,
-			),
+			geometry: {
+				latitude: googlePlaceDetailsResult.geometry.location.lat,
+				longitude: googlePlaceDetailsResult.geometry.location.lng,
+			},
 			mapUrl: googlePlaceDetailsResult.url,
 			website: googlePlaceDetailsResult.website,
 			formatted_address: googlePlaceDetailsResult.formatted_address,
