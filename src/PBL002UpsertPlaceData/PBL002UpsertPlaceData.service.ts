@@ -68,25 +68,25 @@ export class PBL002UpsertPlaceDataService {
 				address_component.types.includes('country'),
 			)?.long_name as string,
 			administrativeAreaLevel1: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('administrativeAreaLevel1'),
+				address_component.types.includes('administrative_area_level_1'),
 			)?.long_name,
 			administrativeAreaLevel2: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('administrativeAreaLevel2'),
+				address_component.types.includes('administrative_area_level_2'),
 			)?.long_name,
 			locality: googlePlaceDetailsResult.address_components.find((address_component) =>
 				address_component.types.includes('locality'),
 			)?.long_name,
 			sublocalityLevel1: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('sublocalityLevel1'),
+				address_component.types.includes('sublocality_level1'),
 			)?.long_name,
 			sublocalityLevel2: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('sublocalityLevel2'),
+				address_component.types.includes('sublocality_level2'),
 			)?.long_name,
 			sublocalityLevel3: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('sublocalityLevel3'),
+				address_component.types.includes('sublocality_level3'),
 			)?.long_name,
 			sublocalityLevel4: googlePlaceDetailsResult.address_components.find((address_component) =>
-				address_component.types.includes('sublocalityLevel4'),
+				address_component.types.includes('sublocality_level4'),
 			)?.long_name,
 			premise: googlePlaceDetailsResult.address_components.find((address_component) =>
 				address_component.types.includes('premise'),
