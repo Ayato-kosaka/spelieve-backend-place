@@ -42,7 +42,7 @@ export class PBL002UpsertPlaceDataService {
 		// Google Place Photo Urls を取得する
 		const photoUrls: string[] = await Promise.all(
 			googlePlaceDetailsResult.photos
-				? googlePlaceDetailsResult.photos.slice(0, NumberOfImagesPlaceStores).map(async (photo) => {
+				? googlePlaceDetailsResult.photos.slice(0, NumberOfImagesPlaceStores + 1).map(async (photo) => {
 						const photoAPIRes = await lastValueFrom(
 							this.httpService.get(
 								`${GOOGLE_MAPS_API_TARGET}/photo?maxwidth=${GooglePlacePhotosMaxWidth}&photoreference=${photo.photo_reference}&key=${Places.apiKey}`,
@@ -58,7 +58,7 @@ export class PBL002UpsertPlaceDataService {
 			place_id: body.place_id,
 			language: body.language,
 			name: googlePlaceDetailsResult.name,
-			imageUrl: googlePlaceDetailsResult.icon,
+			imageUrl: photoUrls[0],
 			geometry: {
 				latitude: googlePlaceDetailsResult.geometry.location.lat,
 				longitude: googlePlaceDetailsResult.geometry.location.lng,
@@ -97,7 +97,7 @@ export class PBL002UpsertPlaceDataService {
 			openingHours: googlePlaceDetailsResult.opening_hours?.periods,
 			rating: googlePlaceDetailsResult.rating,
 			popularTags: [],
-			photoUrls: photoUrls,
+			photoUrls: photoUrls.slice(1),
 			createdAt: placeDocumentSnap ? placeDocumentSnap.get(MPlace.Cols.createdAt) : new Date(),
 			updatedAt: new Date(),
 		};
