@@ -10,9 +10,17 @@ export class PBL003DirectionsService {
 		body: Omit<DirectionsRequest['params'], 'key'>,
 	): Promise<Pick<DirectionsResponse, 'status' | 'data'>> {
 		const client = new Client({});
-		const { status, data } = await client.directions({
-			params: { ...body, key: this.configService.get<string>('GOOGLE_CLOUD_API_KEY')! },
-		});
+		const { status, data } = await client
+			.directions({
+				params: { ...body, key: this.configService.get<string>('GOOGLE_CLOUD_API_KEY')! },
+			})
+			.then((value) => {
+				return value;
+			})
+			.catch((e) => {
+				console.log(e);
+				return e.response;
+			});
 		return {
 			status,
 			data,
