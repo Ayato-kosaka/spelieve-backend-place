@@ -45,6 +45,7 @@ jobs:
         run: |-
           gcloud run deploy $SERVICE_NAME \
             --project=$PROJECT_ID \
+            # --no-traffic \ # 初回デプロイの場合はコメントアウトする
             --image=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} \
             --region=$REGION \
             --service-account=github-action@$PROJECT_ID.iam.gserviceaccount.com \
