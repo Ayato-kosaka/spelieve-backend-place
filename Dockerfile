@@ -14,6 +14,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 COPY package*.json ./
+COPY .env ./
 RUN npm install --omit=dev
-COPY --from=builder /app/dist /app/dist
+COPY --from=builder /app/dist ./dist
 CMD ["npm", "run", "start:prod"]
