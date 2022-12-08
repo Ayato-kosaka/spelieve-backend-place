@@ -1,4 +1,5 @@
 on:
+  pull_request:
   workflow_dispatch:
 
 name: Build and Preview Release
@@ -18,6 +19,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Checkout spelieve-secret
+        uses: actions/checkout@v3
+        with:
+          repository: Ayato-kosaka/spelieve-secret
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          path: spelieve-secret
+
+      - name: set env file
+        run: 'mv ./spelieve-secret/spelieve-backend/release/.env ./'
 
       - name: set env
         run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
