@@ -7,7 +7,7 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: asia-northeast1
   REPOSITORY: cloud-run-source-release
-  PHASE: RELEASE
+  PHASE: -release
 
 jobs:
   deploy:
