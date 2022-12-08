@@ -29,14 +29,13 @@ jobs:
           path: spelieve-secret
 
       - name: set env file
-        run: mv ./spelieve-secret/spelieve-backend/release/.env ./
+        run: 'mv ./spelieve-secret/spelieve-backend/release/.env ./'
 
       - name: delete spelieve-secret
-        run: rm -rf spelieve-secret/
+        run: 'rm -rf spelieve-secret/'
 
       - name: set env
-        run: echo "GIT_REPO_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
-      - run: echo "SERVICE_NAME=$GIT_REPO_NAME$PHASE" >> $GITHUB_ENV
+        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}$PHASE" >> $GITHUB_ENV
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
