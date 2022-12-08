@@ -37,7 +37,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "spelieve-common": "^1.1.45"
+    "spelieve-common": "^1.1.96"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
