@@ -9,6 +9,7 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: asia-northeast1
   REPOSITORY: cloud-run-source-release
+  SERVICE_NAME_SUFFIX: release-
 
 jobs:
   deploy:
@@ -35,8 +36,11 @@ jobs:
       - name: delete spelieve-secret
         run: 'rm -rf spelieve-secret/'
 
+      - uses: benjlevesque/short-sha@v2.1
+        id: short-sha
+
       - name: set env
-        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}$SERVICE_NAME_SUFFIX/}" >> $GITHUB_ENV
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
@@ -52,17 +56,17 @@ jobs:
         run: gcloud auth configure-docker $REGION-docker.pkg.dev
 
       - name: Build Docker image
-        run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} .
+        run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }} .
 
       - name: Push Docker Image
-        run: docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }}
+        run: docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }}
 
       - name: Deploy to Cloud Run
         run: |-
           gcloud run deploy $SERVICE_NAME \
             --project=$PROJECT_ID \
-            --image=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} \
+            --image=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }} \
             --region=$REGION \
             --service-account=github-action@$PROJECT_ID.iam.gserviceaccount.com \
             --allow-unauthenticated \
-            --revision-suffix=${{ github.sha }}
+            --revision-suffix=${{ env.SHA }}
