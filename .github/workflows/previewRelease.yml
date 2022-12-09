@@ -1,5 +1,7 @@
 on:
-  pull_request:
+  push:
+    branches:
+      - develop
   workflow_dispatch:
 
 name: Build and Preview Release
@@ -7,7 +9,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: asia-northeast1
   REPOSITORY: cloud-run-source-release
-  SERVICE_NAME_SUFFIX: release-
 
 jobs:
   deploy:
@@ -35,7 +36,7 @@ jobs:
         run: 'rm -rf spelieve-secret/'
 
       - name: set env
-        run: echo "SERVICE_NAME=$SERVICE_NAME_SUFFIX${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
