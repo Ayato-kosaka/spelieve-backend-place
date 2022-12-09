@@ -40,7 +40,7 @@ jobs:
         id: short-sha
 
       - name: set env
-        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}$SERVICE_NAME_SUFFIX/}" >> $GITHUB_ENV
+        run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}$SERVICE_NAME_SUFFIX" >> $GITHUB_ENV
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
