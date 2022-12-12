@@ -10,9 +10,14 @@ export class PBL004PlaceAutocompleteService {
 		body: Omit<PlaceAutocompleteRequest['params'], 'key'>,
 	): Promise<Pick<PlaceAutocompleteResponse, 'status' | 'data'>> {
 		const client = new Client({});
+		// const { isHideCities } = body;
 		const { status, data } = await client
 			.placeAutocomplete({
-				params: { ...body, key: this.configService.get<string>('GOOGLE_CLOUD_API_KEY')! },
+				params: {
+					...body,
+					key: this.configService.get<string>('GOOGLE_CLOUD_API_KEY')!,
+					//   types: isHideCities ? 'establishment' : ['(cities)', 'establishment'], // TODO: 変換される場所の種類指定
+				},
 			})
 			.then((value) => {
 				return value;
