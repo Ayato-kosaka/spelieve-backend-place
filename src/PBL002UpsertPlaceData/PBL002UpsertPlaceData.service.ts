@@ -30,6 +30,7 @@ export class PBL002UpsertPlaceDataService {
 		// 一定時間の過ぎていないデータは更新しない
 		if (rule.noNeedToUpsert()) {
 			// TODO: https://github.com/Ayato-kosaka/spelieve-backend-place/issues/13 エラーハンドリング
+			// TODO: https://github.com/Ayato-kosaka/spelieve-backend-place/issues/19　Firebase Converter を backend に対応し、型付を行う
 			return placeDocumentSnap!.data();
 		}
 
