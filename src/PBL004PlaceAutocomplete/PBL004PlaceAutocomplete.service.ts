@@ -10,7 +10,6 @@ export class PBL004PlaceAutocompleteService {
 		body: Omit<PlaceAutocompleteRequest['params'], 'key'>,
 	): Promise<Pick<PlaceAutocompleteResponse, 'status' | 'data'>> {
 		const client = new Client({});
-		// const { isHideCities } = body;
 		const { status, data } = await client
 			.placeAutocomplete({
 				params: {
