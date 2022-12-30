@@ -69,4 +69,4 @@ jobs:
             --service-account=github-action@$PROJECT_ID.iam.gserviceaccount.com \
             --allow-unauthenticated \
             --revision-suffix=${{ env.SHA }}
-            # --no-traffic \ # 初回デプロイの場合はコメントアウトする
+            --no-traffic \ # 初回デプロイの場合はコメントアウトする
