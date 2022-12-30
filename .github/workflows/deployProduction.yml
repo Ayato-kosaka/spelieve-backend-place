@@ -22,6 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Checkout spelieve-secret
+        uses: actions/checkout@v3
+        with:
+          repository: Ayato-kosaka/spelieve-secret
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          path: spelieve-secret
+
+      - name: set env file
+        run: 'mv ./spelieve-secret/spelieve-backend/production/.env ./'
+
+      - name: delete spelieve-secret
+        run: 'rm -rf spelieve-secret/'
+
+      - uses: benjlevesque/short-sha@v2.1
+        id: short-sha
+
       - name: set env
         run: echo "SERVICE_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
 
@@ -39,18 +55,18 @@ jobs:
         run: gcloud auth configure-docker $REGION-docker.pkg.dev
 
       - name: Build Docker image
-        run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} .
+        run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }} .
 
       - name: Push Docker Image
-        run: docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }}
+        run: docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }}
 
       - name: Deploy to Cloud Run
         run: |-
           gcloud run deploy $SERVICE_NAME \
             --project=$PROJECT_ID \
-            # --no-traffic \ # 初回デプロイの場合はコメントアウトする
-            --image=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ github.sha }} \
+            --image=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE_NAME:${{ env.SHA }} \
             --region=$REGION \
             --service-account=github-action@$PROJECT_ID.iam.gserviceaccount.com \
             --allow-unauthenticated \
-            --revision-suffix=${{ github.sha }}
+            --revision-suffix=${{ env.SHA }}
+            --no-traffic \ # 初回デプロイの場合はコメントアウトする
