@@ -106,7 +106,8 @@ export class PBL002UpsertPlaceDataService {
 
 		// PDB01MPlace に登録を行う
 		if (rule.needToInsert()) {
-			await placeCollectionRef.add(mPlace);
+			const placeDocRef = placeCollectionRef.doc(body.place_id + body.language);
+			await placeDocRef.set(mPlace);
 		}
 
 		// PDB01MPlace に更新を行う
